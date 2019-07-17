@@ -4,6 +4,15 @@ var jsdom = require('jsdom').jsdom;
 
 var exposedProperties = ['window', 'navigator', 'document'];
 
+global.document.createRange = () => ({
+  setStart: () => {},
+  setEnd: () => {},
+  commonAncestorContainer: {
+    nodeName: 'BODY',
+    ownerDocument: document,
+  },
+});
+
 global.document = jsdom('<div id="root"></div>');
 global.window = document.defaultView;
 Object.keys(document.defaultView).forEach((property) => {
